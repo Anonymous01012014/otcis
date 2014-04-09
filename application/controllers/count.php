@@ -47,10 +47,17 @@ class Count extends CI_Controller {
 	 */
 	public function manage()
 	{
+		//load count model
+		$this->load->model("count_model");
+		$counties = $this->count_model->getAllCounties();				
+		
+		$data["counties"] = $counties;
+
+		
 		$this->load->view("gen/header");
 		$this->load->view("gen/logo.php");
 		$this->load->view("gen/main_content");
-		$this->load->view("count_manage");
+		$this->load->view("count_manage" , $data);
 		$this->load->view("gen/footer");					
 	}
 	
@@ -144,16 +151,18 @@ class Count extends CI_Controller {
 		$this->grid->option['add_url'] = base_url()."site/add"; //add url
 		$this->grid->option['add_title'] = "Add new"; //add title
 			
-		$this->grid->columns = array('SiteName' , 'Count' , 'Date' , 'Accepted');
+		$this->grid->columns = array('CountyName' , 'SiteName' , 'Count' , 'Date' , 'Accepted');
 		
-		//get the data		
+		//get the data
+        $county_fips = $this->input->get("county_fips")	;					
 		$site_name = $this->input->get("site_name")	;
 		$count_bigger = $this->input->get("count_bigger")	;
 		$count_less = $this->input->get("count_less")	;
 		$date_from = $this->input->get("date_from")	;
 		$date_to = $this->input->get("date_to")	;
 		
-		$counts = $this->count_model->searchCount($site_name,
+		$counts = $this->count_model->searchCount(  $county_fips,
+													$site_name,
 													$count_less,
 													$count_bigger,
 													$date_from,
@@ -199,6 +208,87 @@ class Count extends CI_Controller {
 		//redirect to delete page
 		$this->manage();		
 	}
+	
+	
+	/**
+	 * Function name : generateExcelReport
+	 * Description: 
+	 * generate excel report
+	 * 
+	 * parameters:
+	 * 
+	 * created date: 4-4-2014
+	 * ccreated by: Eng. Mohanad Shab Kaleia
+	 * contact: ms.kaleia@gmail.com 
+	 */
+	public function generateExcelReport()
+	{
+		//get the search parameters
+		$county_fips = $this->input->post("county_fips");
+		$site_name = $this->input->post("site_name");
+		$count_bigger = $this->input->post("count_bigger");
+		$count_less = $this->input->post("count_less");
+		$date_from = $this->input->post("date_from");
+		$date_to = $this->input->post("date_to");
+		
+		//get counts record from the database
+		$this->load->model("count_model");
+		$count_records = $this->count_model->searchCount($county_fips , $site_name , $count_bigger , $count_less , $date_from , $date_to);
+		
+		echo $county_fips;
+		
+		
+		//set header array that will contain header 
+		//$header[] = "county";
+		$header[] = "CountyName";
+		$header[] = "SiteName";
+		$header[] = "Count";
+		$header[] = "Date";
+		$header[] = "Accepted";
+		
+
+		
+		/** Error reporting */
+		error_reporting(E_ALL);
+		
+		//include the phpExcel classes from third party folder
+		$include_path = "./application/third_party/phpexcel/";		
+		include $include_path . 'PHPExcel.php';
+		include $include_path . 'PHPExcel/Writer/Excel2007.php';
+		
+		
+		// Create new PHPExcel object
+		$objPHPExcel = new PHPExcel();
+		
+		
+		// Set properties				
+		$objPHPExcel->setActiveSheetIndex(0);
+	
+		$cell_index = "A";
+		
+		/** add header and data **/	
+		for($i = 0 ; $i < count($header); $i++)
+		{				
+			//add header data				
+			$objPHPExcel->getActiveSheet()->SetCellValue($cell_index."1", $header[$i]);
+		
+			for($j=0 ; $j<count($count_records) ; $j++)
+			{
+				$objPHPExcel->getActiveSheet()->SetCellValue($cell_index.($j+2),  $count_records[$j][$header[$i]] );		
+			}			
+			$cell_index++;					
+		}
+				
+		// Rename sheet		
+		$objPHPExcel->getActiveSheet()->setTitle('sheet1');
+		
+		// Save Excel 2007 file		
+		$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);				
+		$objWriter->save(str_replace('.php', '.xlsx', __FILE__));		
+		rename(__DIR__ . "\\count.xlsx", "files/report".date('Y-m-d').".xlsx");
+	}
+	
+	
 	
 	
 	

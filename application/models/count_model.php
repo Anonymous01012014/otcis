@@ -22,6 +22,9 @@ class Count_model extends CI_Model{
 	//site id 
 	var $SiteID = "";
 	
+	//county FPIS
+	var $CountyFIPS = "";
+	
 	//count
 	var $Count = "";
 	
@@ -99,17 +102,21 @@ class Count_model extends CI_Model{
 	 * Author : Mohanad Kaleia
 	 * contact : ms.kaleia@gnail.com
 	 */
-	 public function searchCount($site_name,
+	 public function searchCount($county_FIPS,
+								 $site_name,
 								 $count_less,
 								 $count_bigger,
 								 $date_from,
 								 $date_to)
 	 {
-		$query = "SELECT TempCount.TempCountID , site.SiteName as SiteName , TempCount.count as Count, TempCount.Date as Date, TempCount.Accepted as Accepted
-				  FROM TempCount , site
+		$query = "SELECT TempCount.TempCountID , county.CountyName , site.SiteName as SiteName , TempCount.count as Count, TempCount.Date as Date, TempCount.Accepted as Accepted
+				  FROM TempCount , site , county
 				  where 
-				  site.SiteID = TempCount.SiteID				  
-				  ";
+				  site.SiteID = TempCount.SiteID	
+				  and
+				  site.FipsCounty = county.CountyFIPS			  
+				  ";	  
+		if($county_FIPS<>"") $query.=" and site.FipsCounty = '{$county_FIPS}' ";		  
 		if($site_name<>"") $query.=" and site.SiteName = '{$site_name}' ";
 		if($count_less<>"") $query.=" and TempCount.count < '{$count_less}' ";
 		if($count_bigger<>"") $query.=" and TempCount.count > '{$count_bigger}' ";
@@ -118,14 +125,14 @@ class Count_model extends CI_Model{
 		
 		
 		 
-		if($site_name=="" && $count_less=="" && $count_bigger=="" && $date_from=="" && $date_to=="")
+		if($county_FIPS =="" && $site_name=="" && $count_less=="" && $count_bigger=="" && $date_from=="" && $date_to=="")
 		{
 			$query="SELECT TempCount.TempCountID , site.SiteName as SiteName , TempCount.count as Count, TempCount.Date as Date, TempCount.Accepted as Accepted
 					FROM TempCount , site
 					where site.SiteID = 0";
 		}
 		
-		//echo $query;		  
+				  
 		$query = $this->db->query($query);
 		return $query->result_array();
 	 }
@@ -150,6 +157,47 @@ class Count_model extends CI_Model{
 				  ";
 				  
 		$this->db->query($query);		
+	 }
+	 
+	 /**
+	 * function name : getAllCounties
+	 * 
+	 * Description : 
+	 * Returns the data of all of the counties in the database.
+	 * 
+	 * Created date : 8-4-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Mohanad Kaleia
+	 * contact : ms.kaleia@gnail.com
+	 */
+	 public function getAllCounties(){
+		$query = "SELECT * from 
+				  County				  
+						  ";	  
+		$query = $this->db->query($query);
+		return $query->result_array();
+	 }
+	 
+	 
+	 /**
+	 * function name : getAllSites
+	 * 
+	 * Description : 
+	 * Returns the data of all of the sites in the database.
+	 * 
+	 * Created date : 8-4-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Mohanad Kaleia
+	 * contact : ms.kaleia@gnail.com
+	 */
+	 public function getAllSites(){
+		$query = "SELECT * from 
+				  site				  
+						  ";	  
+		$query = $this->db->query($query);
+		return $query->result_array();
 	 }
 	 
 }

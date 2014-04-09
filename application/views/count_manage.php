@@ -1,7 +1,15 @@
+<script src="<?php echo base_url();?>js/count.js"></script>	
+
 <script>	
 	$(document).ready(function() {		
 	    gridRender('count');
 	}); 	
+	
+	
+	$(document).ready(function() { $("#county_fips").select2(); });
+
+	
+							
 </script>
 
 <div id="container" class="col-md-8 col-md-offset-2">
@@ -10,16 +18,36 @@
 	
 		<form method="post" action="#">
 			
-			<fieldset class="form-control" style="height:250px;">
+			<fieldset class="form-control" style="height:300px;">
 				<legend>Search parameters:</legend>								
 				<table>
 					<tr>
 						<td>
+							County:
+						</td>
+						<td>
+							<select name="county_fips" id="county_fips" class="">
+								<option value="all"></option>
+								<?php 
+									foreach($counties as $county)
+									{
+								?>
+								<option value="<?php echo $county["CountyFIPS"];?>" <?php if($this->input->post('county_fips') == $county["CountyFIPS"]) echo "selected='true'";?>><?php echo $county["CountyName"];?></option>
+								<?php
+									}
+								?>
+							</select>
+							
+						</td>
+					</tr>
+					<tr>						
+						<td>
 							Site Name:
 						</td>
 						<td>
-							<input type="text" name="site_name" class="form-control" value="<?php echo $this->input->post('site_name');?>"/>
+							<input type="text" name="site_name" id="site_name" class="form-control" value="<?php echo $this->input->post('site_name');?>"/>							
 						</td>
+						
 					</tr>
 					
 					<tr>
@@ -50,15 +78,18 @@
 					</tr>										
 				</table>
 				
-				<input type="submit" class="btn btn-info" value="Search"/>
+				<input type="submit" class="btn btn-info" value="Search" />
+				<input type="button" class="btn btn-success" value="generate Excel file" onclick="generateExcel('<?php echo base_url();?>count/generateExcelReport')"/>
 				<input type="reset" class="btn btn-default" value="Reset"/>
 			</fieldset>
 		</form>
 		
+		<br/>
 
 		<div class="grid">
-			<table id="count" action="<?php echo base_url();?>count/ajaxSearchSites?site_name=<?php echo $this->input->post('site_name');?>&count_bigger=<?php echo $this->input->post('count_bigger');?>&count_less=<?php echo $this->input->post('count_less');?>&date_from=<?php echo $this->input->post('date_from');?>&date_to=<?php echo $this->input->post('date_to');?>" dir="ltr">
+			<table id="count" action="<?php echo base_url();?>count/ajaxSearchSites?county_fips=<?php echo $this->input->post('county_fips');?>&site_name=<?php echo $this->input->post('site_name');?>&count_bigger=<?php echo $this->input->post('count_bigger');?>&count_less=<?php echo $this->input->post('count_less');?>&date_from=<?php echo $this->input->post('date_from');?>&date_to=<?php echo $this->input->post('date_to');?>" dir="ltr">
 				<tr>
+					<th col="CountyName" type="text">County</th>
 					<th col="SiteName" type="text">Site name</th>
 					<th col="Count"  type="text">Count</th>	
 					<th col="Date" type="date">Date</th>

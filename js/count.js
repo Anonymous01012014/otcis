@@ -37,11 +37,17 @@ function generateExcel(excel_url)
 		  		date_from:date_from,
 		  		date_to:date_to
 		  		},	
-		  	  beforeSend: function(){},		  				  		
+		  	  beforeSend: function(){
+					  load_spinner = "<img width='25px' height='25px' id='generate_waiting_loader' src='images/spinner.gif' width='100px'/>"
+					  $("#generate_waiting").append(load_spinner);
+				  },		  				  		
 			  success: function(result){					  
 				  window.location.href = window.location.origin + "/otcis/files/report.xlsx";
 			  },
-			  complete: function(){},					
+			  complete: function(){
+					//hide loading spinner
+					$("#generate_waiting_loader").remove();				  
+				  },					
 			  error: function(){}			  	
 			  });
 	  

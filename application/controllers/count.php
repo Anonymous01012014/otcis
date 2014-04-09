@@ -285,7 +285,7 @@ class Count extends CI_Controller {
 		// Save Excel 2007 file		
 		$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);				
 		$objWriter->save(str_replace('.php', '.xlsx', __FILE__));		
-		rename(__DIR__ . "\\count.xlsx", "files/report".date('Y-m-d').".xlsx");
+		rename(__DIR__ . "\\count.xlsx", "files/report.xlsx");
 	}
 	
 	

@@ -306,12 +306,15 @@ class User_model extends CI_Model{
 	 * Author : Ahmad Mulhem Barakat
 	 * contact : molham225@gmail.com
 	 */
-	 public function getUserByUsernameAndPassword(){
+	 public function getUserByUsernameAndPassword()
+	 {
 		$query = "SELECT * 
 				  FROM [user]
 				  WHERE UserName = '{$this->username}'
 				  AND Password = '{$this->password}'
-				  AND active = '1'";
+				  AND active = '1'
+				  and userName = 'admin'			  
+				  ";
 				  
 		$query = $this->db->query($query);
 		$users = $query->result_array();

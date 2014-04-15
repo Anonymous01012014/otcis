@@ -206,7 +206,7 @@ class Count extends CI_Controller {
 		$this->count_model->delete();	
 		
 		//redirect to delete page
-		$this->manage();		
+		redirect(base_url()."count");		
 	}
 	
 	

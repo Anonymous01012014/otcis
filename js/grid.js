@@ -1098,6 +1098,60 @@ function showConfirmDialog(url,title){
 		//add the given url with given message to the Save button href
 		
 		$('.modal-footer button#save').click(function(){
+			//window.location.href = url;
+			showConfirmOfConfirmDialog(url,title);
+		});
+	}
+	
+	
+	/**
+ * function name: showConfirmOfConfirmDialog
+ * 
+ * Description: 
+ * this function will show a dialog with a mesage to confirm the confirm or cancel the action done.
+ * 
+ * Parameters:
+ * 	url: the url to be called after the user confirm a message
+ * 	title: dialog box title 
+ * Created date : 22-2-2014
+ * Modification date : 25-2-2014 by Mohanad Kaleia
+ * Modfication reason : ---
+ * Author : Mohanad Kaleia
+ * contact : ms.kaleia@gmail.com
+*/
+function showConfirmOfConfirmDialog(url,title){
+	
+	title = "This will delete the data permenantly! Are you sure?!"
+	
+	//if there wasn't a confirm dialog already add one.
+	if(!confirm_dialog){
+			append_text = " <div class='modal fade' id='confirm_dialog'>"
+						+	"<div class='modal-dialog'>"
+						+	"<div class='modal-content'>"
+						+	"<div class='modal-header'>"
+						+	"<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>x</button>"
+						+	"<h4 class='modal-title'>Confrm Dialog</h4>"
+						+	"</div>"
+						+	"<div class='modal-body'>"
+						+	"<p id='title'>"+title+"</p>"
+						+	"</div>"
+						+	"<div class='modal-footer'>"
+						+	"<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>"
+						+	"<button type='button' class='btn btn-primary' id='save' >Confirm</button>"
+						+	"</div>"
+						+	"</div><!-- /.modal-content -->"
+						+	"</div><!-- /.modal-dialog -->"
+						+	"</div><!-- /.modal -->";			
+			$('body').append(append_text);
+			confirm_dialog = true;
+		}
+		//change the message title to the one given from the user.
+		$('.modal-body p#title').html(title);
+		//append the dialog to the page body and show it
+		$('#confirm_dialog:first').appendTo('body').modal();
+		//add the given url with given message to the Save button href
+		
+		$('.modal-footer button#save').click(function(){
 			window.location.href = url;
 		});
 	}
@@ -1125,7 +1179,7 @@ function showConfirmDialog(url,title){
  * Author : Mohanad Shab Kaleia
  * contact : ms.kaleia@gmail.com
  */
-function composeMessage(message, parameters  , data)
+function composeMessage(message, parameters , data)
 {
 	
 	var message_format = message;

@@ -177,7 +177,7 @@ class Count extends CI_Controller {
 		$this->grid->data = $counts;
 		//grid controls
 		$this->grid->control = array(									  									  
-									  array("title" => "Delete" , "icon"=>"glyphicon glyphicon-trash" ,"url"=>base_url()."count/delete" , "message_type"=>"confirm" , "message"=>"Are you sure to delete this count record?")
+									  array("title" => "Delete" , "icon"=>"glyphicon glyphicon-trash" ,"url"=>base_url()."count/delete" , "message_type"=>"confirm" , "message"=>"Are you sure you want to delete this count record: #1 from site:#2 in county: #3 on date: #4?" , "message_parameter" => array("Count","SiteName","CountyName" , "Date"))
 									);												
 						
 		//render our grid :)

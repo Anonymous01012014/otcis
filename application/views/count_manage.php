@@ -68,8 +68,8 @@
 							Date:
 						</td>
 											
-						<td>							
-							<input class="form-control" type="text" name="date_from" id="date_from" placeholder="from" value="<?php echo $this->input->post('date_from');?>" title="from date"/>
+						<td>								
+							<input class="form-control" type="text" name="date_from" id="date_from" placeholder="from" value="<?php echo $this->input->post('date_from');?>" title="from date"/>							
 						</td>
 						
 						<td>
@@ -108,7 +108,7 @@
 	});
 	
 	$('input#date_to').datepicker({
-		format: "yyyy-mm-dd"
+		format: "yyyy"
 	});
 
 </script>

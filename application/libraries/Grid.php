@@ -55,8 +55,8 @@ class Grid
 	 * 
 	 * control array example
 	 * array(
-			  array("title" => "Edit" , "icon"=>"icon-pencil" , "url"=>base_url()."user/editUser" , "message_type"=>null , "message"=>"") , 
-			  array("title" => "Delete" , "icon"=>"icon-trash" ,"url"=>base_url()."user/deleteUser" , "message_type"=>"confirm" , "message"=>"Are you sure?")
+			  array("title" => "Edit" , "icon"=>"icon-pencil" , "url"=>base_url()."user/editUser" , "message_type"=>null , "message"=>"" , "message_parms" => null) , 
+			  array("title" => "Delete" , "icon"=>"icon-trash" ,"url"=>base_url()."user/deleteUser" , "message_type"=>"confirm" , "message"=>"Are you sure you want to delete #1 with id #2?" , "message_parms" => "{'name' , 'id'}")
 			);
 	 * each element of controll array is a function to with the grid, each element contain these fields
 	 * title : the label that will appear in the grid
@@ -64,6 +64,7 @@ class Grid
 	 * url	 : the url function
 	 * message_type : javascript alert type (confirm , prompt)
 	 * message : the message text 
+	 * message_parameter : the parameter to be added to the message
 	 */ 
 	
 	
@@ -329,6 +330,36 @@ class Grid
 				$results[] = $row;	
 		}				
 	    return $results;
+	}
+	
+	/**
+	 * function name :composeMessage
+	 * 
+	 * Description : 
+	 * This function will compose a message from data array so each row will have its own message 
+	 * depending on some attributes
+	 * parms:
+	 * $message: the message in text format
+	 * $parameters: array of parameters that will be added to the message
+	 * these parameters comes from database column name
+	 * -----------------------------------------------	
+	 * example:
+	 * 	compseMessage("Hello #1 How are you?!", {'name'})
+	 * Created date ; 14-4-2014
+	 * Modification date : 
+	 * Modfication reason : 
+	 * Author : Mohanad Shab Kaleia
+	 * contact : ms.kaleia@gmail.com
+	 */
+	function composeMessage($message, $parameters , $row_id)
+	{
+		$message_format = "";
+		
+		for($i=1 ; $i <= count($parameters) ; $i++)
+		{
+			$message_format .= str_replace("#".$i,$this->data[$row_id][$parameters[$i]],$message);
+		}
+	    
 	}
 			
 }

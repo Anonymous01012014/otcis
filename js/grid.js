@@ -354,7 +354,7 @@ function gridAddControlRow(grid_id , control , data , option , row_id)
 	
 	//JQuery funcion
 	var jq_func="";	
-		
+	// alert(row_id);
 	for(control_counter=0;control_counter<numberOfControls;control_counter++)
 	{
 		var database_id = option['id']; //database table primary key				
@@ -366,13 +366,18 @@ function gridAddControlRow(grid_id , control , data , option , row_id)
 		append_text += " title='"+control[control_counter]['title']+"'";
 		append_text += " class='btn btn-default btn-xs'";
 		message = control[control_counter]['message'];
+		message_parameters = control[control_counter]['message_parameter'];
+		
+		message_format = composeMessage(message, message_parameters  , data[row_id]);
+	
+		
 		url = control[control_counter]['url'];
 		//if message type is input then this link will show an input dialog
 		if(control[control_counter]['message_type'] === "input"){
-			append_text += " href='javascript:showInputDialog(\""+url+"/"+data[row_id][database_id]+"\",\""+control[control_counter]['message']+"\")'";
+			append_text += " href='javascript:showInputDialog(\""+url+"/"+data[row_id][database_id]+"\",\""+message_format+"\")'";
 		//if message type is confirm then this link will show a confirm dialog
 		}else if(control[control_counter]['message_type'] === "confirm"){
-			append_text += " href='javascript:showConfirmDialog(\""+url+"/"+data[row_id][database_id]+"\",\""+control[control_counter]['message']+"\")'";
+			append_text += " href='javascript:showConfirmDialog(\""+url+"/"+data[row_id][database_id]+"\",\""+message_format+"\")'";
 		}else{
 			
 							
@@ -1095,4 +1100,39 @@ function showConfirmDialog(url,title){
 		$('.modal-footer button#save').click(function(){
 			window.location.href = url;
 		});
+	}
+	
+	
+	
+/**
+ * function name :composeMessage
+ * 
+ * Description : 
+ * This function will compose a message from data array so each row will have its own message 
+ * depending on some attributes
+ * parms:
+ * $message: the message in text format
+ * $parameters: array of parameters that will be added to the message
+ * data : data array row
+ * 
+ * these parameters comes from database column name
+ * -----------------------------------------------	
+ * example:
+ * 	compseMessage("Hello #1 How are you?!", {'name'})
+ * Created date ; 14-4-2014
+ * Modification date : 
+ * Modfication reason : 
+ * Author : Mohanad Shab Kaleia
+ * contact : ms.kaleia@gmail.com
+ */
+function composeMessage(message, parameters  , data)
+{
+	
+	var message_format = message;
+	
+	for(par_counter=1 ; par_counter <= parameters.length ; par_counter++)
+	{			
+		message_format = message_format.replace("#" + par_counter ,data[parameters[par_counter-1]]);
 	}	
+	return message_format;
+}	

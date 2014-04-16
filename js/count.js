@@ -5,10 +5,12 @@
  * Description: 
  * this file contain functions 
  * 
+ * paramters:
+ * excel_url: the php function to ba called via ajax
  * created date : 4-4-2014  
  */
 
-function generateExcel(excel_url)
+function generateExcel(excel_url , extension)
 {	
 	/** send the data to the page so it can be download the excel file immediatly **/
 	
@@ -27,7 +29,7 @@ function generateExcel(excel_url)
 	
 	$.ajax({
 			  type: "POST",
-			  url: excel_url,			   
+			  url: excel_url +"/"+extension,			   
 			  cache: false,
 			  data:{
 				county_fips:county_fips,  			  	
@@ -42,7 +44,10 @@ function generateExcel(excel_url)
 					  $("#generate_waiting").append(load_spinner);
 				  },		  				  		
 			  success: function(result){					  
-				  window.location.href = window.location.origin + "/otcis/files/report.xlsx";
+				  if(extension == "excel")
+					window.location.href = window.location.origin + "/otcis/files/report.xlsx";
+				  else
+					window.location.href = window.location.origin + "/otcis/files/report.csv";
 			  },
 			  complete: function(){
 					//hide loading spinner

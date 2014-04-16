@@ -221,7 +221,7 @@ class Count extends CI_Controller {
 	 * ccreated by: Eng. Mohanad Shab Kaleia
 	 * contact: ms.kaleia@gmail.com 
 	 */
-	public function generateExcelReport()
+	public function generateExcelReport($extension="excel")
 	{
 		//get the search parameters
 		$county_fips = $this->input->post("county_fips");
@@ -282,15 +282,28 @@ class Count extends CI_Controller {
 		// Rename sheet		
 		$objPHPExcel->getActiveSheet()->setTitle('sheet1');
 		
-		// Save Excel 2007 file		
-		$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);				
-		$objWriter->save(str_replace('.php', '.xlsx', __FILE__));		
-		rename(__DIR__ . "\\count.xlsx", "files/report.xlsx");
+		if($extension == "excel")
+		{
+			// Save Excel 2007 file		
+			$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);				
+			$objWriter->save(str_replace('.php', '.xlsx', __FILE__));		
+			rename(__DIR__ . "\\count.xlsx", "files/report.xlsx");
+		}
+		else
+		{
+			//save csv file
+			$objWriter = new PHPExcel_Writer_CSV($objPHPExcel);
+			$objWriter->save("report.csv"); 
+			$objWriter->save(str_replace('.php', '.csv', __FILE__));	
+			rename(__DIR__ . "\\count.csv", "files/report.csv");
+		}
+		
+		
+		
 	}
 	
 	
-	
-	
+		
 	
 }
 

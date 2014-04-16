@@ -79,8 +79,9 @@
 				</table>
 				
 				<input type="submit" class="btn btn-info" value="Search" />
-				<input type="button" class="btn btn-success" value="generate Excel file" onclick="generateExcel('<?php echo base_url();?>count/generateExcelReport')"/>				
-				<input type="reset" class="btn btn-default" value="Reset"/>
+				<input type="button" class="btn btn-success" value="generate Excel file" onclick="generateExcel('<?php echo base_url();?>count/generateExcelReport','excel')"/>				
+				<input type="button" class="btn btn-success" value="generate CSV file" onclick="generateExcel('<?php echo base_url();?>count/generateExcelReport','csv')"/>				
+				<input type="reset" class="btn btn-link" value="Reset"/>
 				<div id="generate_waiting"></div>
 			</fieldset>
 		</form>

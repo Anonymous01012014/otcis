@@ -235,7 +235,7 @@ class Count extends CI_Controller {
 		$this->load->model("count_model");
 		$count_records = $this->count_model->searchCount($county_fips , $site_name , $count_bigger , $count_less , $date_from , $date_to);
 		
-		echo $county_fips;
+		
 		
 		
 		//set header array that will contain header 
@@ -282,24 +282,27 @@ class Count extends CI_Controller {
 		// Rename sheet		
 		$objPHPExcel->getActiveSheet()->setTitle('sheet1');
 		
+		$file_name = "OTCIS-report-".date("[Y-m-d]-[H-i-s]");
+		
 		if($extension == "excel")
 		{
 			// Save Excel 2007 file		
 			$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);				
-			$objWriter->save(str_replace('.php', '.xlsx', __FILE__));		
-			rename(__DIR__ . "\\count.xlsx", "files/report.xlsx");
+			$objWriter->save(str_replace('.php', '.xlsx', __FILE__));										
+			rename(__DIR__ . "\\count.xlsx", "files/".$file_name.".xlsx");
 		}
 		else
 		{
 			//save csv file
 			$objWriter = new PHPExcel_Writer_CSV($objPHPExcel);
 			$objWriter->save("report.csv"); 
-			$objWriter->save(str_replace('.php', '.csv', __FILE__));	
-			rename(__DIR__ . "\\count.csv", "files/report.csv");
+			$objWriter->save(str_replace('.php', '.csv', __FILE__));			
+			rename(__DIR__ . "\\count.csv", "files/".$file_name.".csv");
 		}
 		
 		
-		
+		//echo the file name and send it to javascript so it will read it
+		echo json_encode($file_name);				
 	}
 	
 	

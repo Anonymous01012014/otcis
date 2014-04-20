@@ -495,8 +495,8 @@ function gridAddControlBar(grid_id , option , data)
 		if(end_index > total_size)	end_index = total_size;
 		
 		
-		bar+='<div class="col-md-1">';
-		bar+='<span class="grid-pagination">'+start_index+'-'+end_index+'</span>';
+		bar+='<div class="col-md-2">';
+		bar+='<span class="grid-pagination">'+start_index+'-'+end_index+' of total '+ total_size +'</span>';
 		bar+='</div>';
 		
 		//pagination
@@ -511,7 +511,7 @@ function gridAddControlBar(grid_id , option , data)
 		if(prev_index < 1) {prev_index = 1 ; prev_class = "active";}
 		if(next_index > number_of_pages) {next_index = number_of_pages ; next_class = "active";}
 		
-		bar+='<div class="col-md-5">';
+		bar+='<div class="col-md-4">';
 		bar+='<div>';
 		bar+='<ul class="pagination pagination-centered grid-pagination">';		
 		bar+='<li class="'+prev_class+'" title="Prev" onclick="gridGotoPage(\'' + grid_id + '\'  , ' + prev_index + ' );" ><a>&laquo; Prev</a></li>';				

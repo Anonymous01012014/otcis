@@ -26,8 +26,7 @@
 							County:
 						</td>
 						<td>
-							<select name="county_fips" id="county_fips" class="">
-								<option value="all"></option>
+							<select name="county_fips" id="county_fips" class="">								
 								<?php 
 									foreach($counties as $county)
 									{
@@ -78,11 +77,23 @@
 					</tr>										
 				</table>
 				
-				<input type="submit" class="btn btn-info" value="Search" />
-				<input type="button" class="btn btn-success" value="generate Excel file" onclick="generateExcel('<?php echo base_url();?>count/generateExcelReport','excel')"/>				
-				<input type="button" class="btn btn-success" value="generate CSV file" onclick="generateExcel('<?php echo base_url();?>count/generateExcelReport','csv')"/>				
-				<input type="reset" class="btn btn-link" value="Reset"/>
-				<div id="generate_waiting"></div>
+				<div class="row">
+					<div class="col-md-8">
+						<input type="submit" class="btn btn-info" value="Search" />
+						<input type="button" class="btn btn-success" value="generate Excel file" onclick="generateExcel('<?php echo base_url();?>count/generateExcelReport','excel')"/>				
+						<input type="button" class="btn btn-success" value="generate CSV file" onclick="generateExcel('<?php echo base_url();?>count/generateExcelReport','csv')"/>				
+						<input type="reset" class="btn btn-link" value="Reset"/>
+						<div id="generate_waiting"></div>
+					</div>
+					
+					<div class="col-md-4">				
+						<a href="<?php echo base_url();?>login_user/signout" class="btn btn-link" style="float:right">Logout</a>		
+					</div>
+					
+				</div>
+				
+				
+				
 			</fieldset>
 		</form>
 		

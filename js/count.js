@@ -43,11 +43,19 @@ function generateExcel(excel_url , extension)
 					  load_spinner = "<img width='25px' height='25px' id='generate_waiting_loader' src='images/spinner.gif' width='100px'/>"
 					  $("#generate_waiting").append(load_spinner);
 				  },		  				  		
-			  success: function(result){					  
+			  success: function(result){	
+				  
+				  file_name = jQuery.parseJSON(result);
+				  				  
 				  if(extension == "excel")
-					window.location.href = window.location.origin + "/otcis/files/report.xlsx";
+				  {					  
+					window.location.href = window.location.origin + "/otcis/files/"+ file_name +".xlsx";
+			      }
 				  else
-					window.location.href = window.location.origin + "/otcis/files/report.csv";
+				  {
+					window.location.href = window.location.origin + "/otcis/files/"+ file_name +".csv";  
+				  }
+					
 			  },
 			  complete: function(){
 					//hide loading spinner

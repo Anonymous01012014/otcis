@@ -121,9 +121,9 @@ class Count_model extends CI_Model{
 		if($count_less<>"") $query.=" and TempCount.count < '{$count_less}' ";
 		if($count_bigger<>"") $query.=" and TempCount.count > '{$count_bigger}' ";
 		if($date_from<>"") $query.=" and TempCount.Date > '{$date_from}' ";
-		if($date_to<>"") $query.=" and TempCount.Date < '{$date_to}' ;";
+		if($date_to<>"") $query.=" and TempCount.Date < '{$date_to}' ";
 		
-		
+		$query.=" order by SiteName, Date asc";
 		 
 		if($county_FIPS =="" && $site_name=="" && $count_less=="" && $count_bigger=="" && $date_from=="" && $date_to=="")
 		{

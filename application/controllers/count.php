@@ -282,6 +282,10 @@ class Count extends CI_Controller {
 		// Rename sheet		
 		$objPHPExcel->getActiveSheet()->setTitle('sheet1');
 		
+		
+		//set the default time zone to be in Oklahoma
+		date_default_timezone_set('US/central');
+		
 		$file_name = "OTCIS-report-".date("[Y-m-d]-[H-i-s]");
 		
 		if($extension == "excel")
@@ -305,8 +309,16 @@ class Count extends CI_Controller {
 		echo json_encode($file_name);				
 	}
 	
+	/*
+	public function testTimeZone()
+	{
+		date_default_timezone_set('US/central');
+		echo date_default_timezone_get();
+		echo "<br/>";
+		echo date("Y-m-d : H:i:s");
+	}
+	*/
 	
-		
 	
 }
 

@@ -13,7 +13,19 @@
 </script>
 
 <div id="container" class="col-md-8 col-md-offset-2">
-	<h1 class="title">Manage Counts</h1>
+	
+	<div class="row">
+			<div class="col-md-8">
+				<h1 class="title">Manage Counts</h1>	
+			</div>
+			
+				
+			<div class="col-md-4">				
+				<a href="<?php echo base_url();?>login_user/signout" class="btn btn-link" style="float:right">Logout</a>		
+			</div>
+	</div>
+	
+	
 	<hr/>
 	
 		<form method="post" action="#">
@@ -78,18 +90,13 @@
 				</table>
 				
 				<div class="row">
-					<div class="col-md-8">
+					<div class="col-md-12">
 						<input type="submit" class="btn btn-info" value="Search" />
 						<input type="button" class="btn btn-success" value="generate Excel file" onclick="generateExcel('<?php echo base_url();?>count/generateExcelReport','excel')"/>				
 						<input type="button" class="btn btn-success" value="generate CSV file" onclick="generateExcel('<?php echo base_url();?>count/generateExcelReport','csv')"/>				
 						<input type="reset" class="btn btn-link" value="Reset"/>
 						<div id="generate_waiting"></div>
-					</div>
-					
-					<div class="col-md-4">				
-						<a href="<?php echo base_url();?>login_user/signout" class="btn btn-link" style="float:right">Logout</a>		
-					</div>
-					
+					</div>				
 				</div>
 				
 				
@@ -106,7 +113,7 @@
 					<th col="SiteName" type="text">Site name</th>
 					<th col="Count"  type="text">Count</th>	
 					<th col="Date" type="date">Date</th>
-					<th col="Accepted" type="text">Is accepted</th>					
+					<th col="Accepted" type="text">Accepted</th>					
 				</tr>										
 			</table>	
 		</div>

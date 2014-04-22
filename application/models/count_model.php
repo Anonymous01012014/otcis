@@ -107,7 +107,8 @@ class Count_model extends CI_Model{
 								 $count_less,
 								 $count_bigger,
 								 $date_from,
-								 $date_to)
+								 $date_to,
+								 $status)
 	 {
 		$query = "SELECT TempCount.TempCountID , county.CountyName , site.SiteName as SiteName , TempCount.count as Count, TempCount.Date as Date, TempCount.Accepted as Accepted
 				  FROM TempCount , site , county
@@ -122,8 +123,10 @@ class Count_model extends CI_Model{
 		if($count_bigger<>"") $query.=" and TempCount.count > '{$count_bigger}' ";
 		if($date_from<>"") $query.=" and TempCount.Date > '{$date_from}' ";
 		if($date_to<>"") $query.=" and TempCount.Date < '{$date_to}' ";
-		
+		if($status<>"all") $query.=" and TempCount.Accepted = '{$status}' ";
 		$query.=" order by CountyName, SiteName, Date asc";
+		 
+		
 		 
 		if($county_FIPS =="" && $site_name=="" && $count_less=="" && $count_bigger=="" && $date_from=="" && $date_to=="")
 		{

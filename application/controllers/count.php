@@ -160,13 +160,15 @@ class Count extends CI_Controller {
 		$count_less = $this->input->get("count_less")	;
 		$date_from = $this->input->get("date_from")	;
 		$date_to = $this->input->get("date_to")	;
+		$status = $this->input->get("status")	;
 		
 		$counts = $this->count_model->searchCount(  $county_fips,
 													$site_name,
 													$count_less,
 													$count_bigger,
 													$date_from,
-													$date_to);
+													$date_to,
+													$status);
 		//converting enumeration
 		for( $i = 0 ; $i <count($counts) ;  $i++)
 		{
@@ -230,10 +232,11 @@ class Count extends CI_Controller {
 		$count_less = $this->input->post("count_less");
 		$date_from = $this->input->post("date_from");
 		$date_to = $this->input->post("date_to");
+		$status = $this->input->post("status");
 		
 		//get counts record from the database
 		$this->load->model("count_model");
-		$count_records = $this->count_model->searchCount($county_fips , $site_name , $count_bigger , $count_less , $date_from , $date_to);
+		$count_records = $this->count_model->searchCount($county_fips , $site_name , $count_bigger , $count_less , $date_from , $date_to , $status);
 		
 		
 		

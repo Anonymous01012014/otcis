@@ -22,7 +22,8 @@ function generateExcel(excel_url , extension)
 	counts_to 	= $("#count_less").val();
 	date_from 	= $("#date_from").val();
 	date_to 	= $("#date_to").val();
-	
+	status		= $("#status").val();
+
 	//alert(excel_url + "?site_name="+site_name+"&count_bigger="+"&count_less="+counts_to+"&date_from="+date_from+"&date_to="+date_to);
 	
 	//windows.location.href = excel_url + "?site_name="+site_name+"&counts_from="+"&counts_to="+counts_to+"&date_from="+date_from+"&date_to="+date_to;
@@ -37,7 +38,8 @@ function generateExcel(excel_url , extension)
 		  		counts_from:counts_from ,
 		  		counts_to:counts_to , 		  		
 		  		date_from:date_from,
-		  		date_to:date_to
+		  		date_to:date_to,
+		  		status:status
 		  		},	
 		  	  beforeSend: function(){
 					  load_spinner = "<img width='25px' height='25px' id='generate_waiting_loader' src='images/spinner.gif' width='100px'/>"

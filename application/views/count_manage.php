@@ -30,7 +30,7 @@
 	
 		<form method="post" action="#">
 			
-			<fieldset class="form-control" style="height:300px;">
+			<fieldset class="form-control" style="height:350px;">
 				<legend>Search parameters:</legend>								
 				<table>
 					<tr>
@@ -52,11 +52,13 @@
 							
 						</td>
 					</tr>
-					<tr>						
+					<tr>
 						<td>
 							Site Name:
-						</td>
+						</td>	
+										
 						<td>
+							
 							<input type="text" name="site_name" id="site_name" class="form-control" value="<?php echo $this->input->post('site_name');?>"/>							
 						</td>
 						
@@ -87,7 +89,22 @@
 						<td>
 							<input class="form-control" type="text" name="date_to" id="date_to" placeholder="to" value="<?php echo $this->input->post('date_to');?>" title="to date"/>
 						</td>						
-					</tr>										
+					</tr>	
+					
+					<!-- is accepted -->
+					<tr>
+						<td>
+							Status:
+						</td>
+						
+						<td>
+							<select name="status" id="status" class="form-control">
+								<option value="all" <?php if($this->input->post('status') == "all") echo "selected='true'";?>>All</option>
+								<option value="1" <?php if($this->input->post('status') == "1") echo "selected='true'";?>>Accepted</option>
+								<option value="-1" <?php if($this->input->post('status') == "-1") echo "selected='true'";?>>Rejected</option>
+							</select>
+						</td>
+					</tr>									
 				</table>
 				
 				<div class="row">
@@ -108,7 +125,7 @@
 		<br/>
 
 		<div class="grid">
-			<table id="count" action="<?php echo base_url();?>count/ajaxSearchSites?county_fips=<?php echo $this->input->post('county_fips');?>&site_name=<?php echo $this->input->post('site_name');?>&count_bigger=<?php echo $this->input->post('count_bigger');?>&count_less=<?php echo $this->input->post('count_less');?>&date_from=<?php echo $this->input->post('date_from');?>&date_to=<?php echo $this->input->post('date_to');?>" dir="ltr">
+			<table id="count" action="<?php echo base_url();?>count/ajaxSearchSites?county_fips=<?php echo $this->input->post('county_fips');?>&site_name=<?php echo $this->input->post('site_name');?>&count_bigger=<?php echo $this->input->post('count_bigger');?>&count_less=<?php echo $this->input->post('count_less');?>&date_from=<?php echo $this->input->post('date_from');?>&date_to=<?php echo $this->input->post('date_to');?>&status=<?php echo $this->input->post('status');?>" dir="ltr">
 				<tr>
 					<th col="CountyName" type="text">County</th>
 					<th col="SiteName" type="text">Site name</th>

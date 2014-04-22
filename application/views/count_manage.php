@@ -38,7 +38,7 @@
 							County:
 						</td>
 						<td>
-							<select name="county_fips" id="county_fips" class="">								
+							<select name="county_fips" id="county_fips" class="">															
 								<?php 
 									foreach($counties as $county)
 									{
@@ -47,6 +47,7 @@
 								<?php
 									}
 								?>
+								<option value="all" <?php if($this->input->post('county_fips') == "all") echo "selected='true'";?>>All</option>
 							</select>
 							
 						</td>
@@ -127,7 +128,7 @@
 	});
 	
 	$('input#date_to').datepicker({
-		format: "yyyy"
+		format: "yyyy-mm-dd"
 	});
 
 </script>

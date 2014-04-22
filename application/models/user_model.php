@@ -313,7 +313,7 @@ class User_model extends CI_Model{
 				  WHERE UserName = '{$this->username}'
 				  AND Password = '{$this->password}'
 				  AND active = '1'
-				  and userName = 'admin'			  
+				  and RoleID = '1'			  
 				  ";
 				  
 		$query = $this->db->query($query);

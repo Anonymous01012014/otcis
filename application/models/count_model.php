@@ -116,14 +116,14 @@ class Count_model extends CI_Model{
 				  and
 				  site.FipsCounty = county.CountyFIPS			  
 				  ";	  
-		if($county_FIPS<>"") $query.=" and site.FipsCounty = '{$county_FIPS}' ";		  
+		if($county_FIPS<>"all") $query.=" and site.FipsCounty = '{$county_FIPS}' ";		  
 		if($site_name<>"") $query.=" and site.SiteName = '{$site_name}' ";
 		if($count_less<>"") $query.=" and TempCount.count < '{$count_less}' ";
 		if($count_bigger<>"") $query.=" and TempCount.count > '{$count_bigger}' ";
 		if($date_from<>"") $query.=" and TempCount.Date > '{$date_from}' ";
 		if($date_to<>"") $query.=" and TempCount.Date < '{$date_to}' ";
 		
-		$query.=" order by SiteName, Date asc";
+		$query.=" order by CountyName, SiteName, Date asc";
 		 
 		if($county_FIPS =="" && $site_name=="" && $count_less=="" && $count_bigger=="" && $date_from=="" && $date_to=="")
 		{
